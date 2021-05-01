@@ -26,5 +26,5 @@ address = ":8080"
 [[tls]]
   entryPoints = ["httpSSL"]
   [tls.certificate]
-    certFile = "/certs/cert.crt"
-    keyFile = "/certs/cert.key"
+    certFile = "/configuration/certs/cert.crt"
+    keyFile = "/configuration/certs/cert.key"
