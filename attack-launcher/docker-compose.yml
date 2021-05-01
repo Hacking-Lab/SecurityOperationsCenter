@@ -1,0 +1,16 @@
+version: '3.6'
+
+services:
+  attack-launcher:
+    build: .
+    image: attack-launcher:latest
+    hostname: 'attack-launcher'
+    restart: always
+    environment:
+      - HL_USER_USERNAME=hacker
+      - HL_USER_PASSWORD=compass
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.frontend.rule=Host:attack-launcher.winattacklab.local"
+      - "traefik.protocol=http"

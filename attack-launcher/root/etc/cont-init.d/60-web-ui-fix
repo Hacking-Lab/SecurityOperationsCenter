@@ -1,0 +1,12 @@
+#!/usr/bin/with-contenv bash
+
+echo $websocketurl
+
+echo $websocketurl > /tmp/debug.log
+
+if [ -z ${websocketurl+x} ]; then
+	sed -i -e "s/SED_BASE_SOCKET_URL/localhost/g" /opt/www/js/script.js
+else
+	sed -i -e "s/SED_BASE_SOCKET_URL/$websocketurl/g" /opt/www/js/script.js
+fi
+

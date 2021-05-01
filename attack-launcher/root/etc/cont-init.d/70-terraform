@@ -1,0 +1,50 @@
+#!/usr/bin/with-contenv bash
+
+cd /winattacklab
+
+# SETUP PROXY
+echo "export http_proxy=$http_proxy" > /winattacklab/proxy.env
+echo "export HTTP_PROXY=$http_proxy" >> /winattacklab/proxy.env
+echo "export https_proxy=$https_proxy" >> /winattacklab/proxy.env
+echo "export HTTPS_PROXY=$https_proxy" >> /winattacklab/proxy.env
+
+source /winattacklab/proxy.env
+
+# SETUP EMPTY LOGS
+touch /winattacklab/terraform-plan.log
+touch /winattacklab/logs/terraform-apply.log
+touch /winattacklab/logs/terraform-destroy.log
+touch /winattacklab/logs/terraform-ipaddresses.log
+touch /winattacklab/logs/terraform-status.log
+touch /winattacklab/logs/terraform-init.log
+
+# SETUP DATE
+mydate=`date +%Y-%m-%d--%H-%M-%S`
+sed -i -e "s/E1DATE/$mydate/g" main.tf
+
+# SETUP ACCOUNT
+admin_username="lab_admin"
+admin_password=`uuidgen`
+dcpassword=`uuidgen`
+mgmtpassword=`uuidgen`
+
+sed -e "s/ADMIN_USERNAME/$admin_username/g" /winattacklab/terraform.tfvars > /winattacklab/terraform.tfvars.neu
+sed -e "s/ADMIN_PASSWORD/$admin_password/g" /winattacklab/terraform.tfvars.neu > /winattacklab/terraform.tfvars.neu.neu
+sed -e "s/DC_PASSWORD/$dcpassword/g" /winattacklab/terraform.tfvars.neu.neu > /winattacklab/terraform.tfvars.neu.neu.neu
+sed -e "s/MGMT_PASSWORD/$mgmtpassword/g" /winattacklab/terraform.tfvars.neu.neu.neu > /winattacklab/terraform.tfvars
+
+sed -i -e "s/ADMIN_USERNAME/$admin_username/g" /opt/scripts/ipaddresses-task
+sed -i -e "s/ADMIN_PASSWORD/$admin_password/g" /opt/scripts/ipaddresses-task
+
+echo "Username: $admin_username" > /tmp/credentials.txt
+echo "Password: $admin_password" >> /tmp/credentials.txt
+echo "===" >> /tmp/credentials.txt
+
+# INIT
+terraform init -no-color 2>&1 > /winattacklab/logs/terraform-init.log
+echo "`date`: terraform init executed" >> /winattacklab/logs/terraform-status.log
+
+# CREATE PLAN
+terraform plan -no-color -out /winattacklab/terraform-plan 2>&1 > /winattacklab/terraform-plan.log
+echo "`date`: terraform plan executed" >> /winattacklab/logs/terraform-status.log
+

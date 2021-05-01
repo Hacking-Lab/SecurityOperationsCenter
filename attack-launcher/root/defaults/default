@@ -1,0 +1,73 @@
+server {
+	listen 80 default_server;
+
+	root /opt/www;
+	index index.html index.htm index.php;
+
+	server_name _;
+
+	client_max_body_size 0;
+
+	location / {
+		try_files $uri $uri/ /index.html /index.php?$args =404;
+	}
+
+        location /api/deploy/task {
+                proxy_pass http://127.0.0.1:8084;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "Upgrade";
+                proxy_set_header Host $host;
+        }
+        location /api/destroy/task {
+                proxy_pass http://127.0.0.1:8085;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "Upgrade";
+                proxy_set_header Host $host;
+        }
+        location /api/log/task {
+                proxy_pass http://127.0.0.1:8086;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "Upgrade";
+                proxy_set_header Host $host;
+        }
+        location /api/ipaddresses/task {
+                proxy_pass http://127.0.0.1:8087;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "Upgrade";
+                proxy_set_header Host $host;
+        }
+	location /api/deploy {
+		proxy_pass http://127.0.0.1:8080;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection "Upgrade";
+		proxy_set_header Host $host;
+	}
+        location /api/destroy {
+                proxy_pass http://127.0.0.1:8081;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "Upgrade";
+                proxy_set_header Host $host;
+        }
+        location /api/log {
+                proxy_pass http://127.0.0.1:8082;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "Upgrade";
+                proxy_set_header Host $host;
+        }
+        location /api/ipaddresses {
+                proxy_pass http://127.0.0.1:8083;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "Upgrade";
+                proxy_set_header Host $host;
+        }
+
+
+}

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd /winattacklab/
+
+echo "=========================="
+echo "running the script /opt/scripts/ipaddresses on the server"
+echo "=========================="
+
+ifconfig -a
+

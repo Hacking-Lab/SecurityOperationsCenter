@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv sh
+
+echo "starting deploy websocketd"
+exec /usr/bin/websocketd -port=8084 -address=127.0.0.1 /opt/scripts/deploy-task
+

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd /winattacklab/
+
+echo "=========================="
+echo "running the script /opt/scripts/log on the server"
+echo "=========================="
+
+ps -ef 

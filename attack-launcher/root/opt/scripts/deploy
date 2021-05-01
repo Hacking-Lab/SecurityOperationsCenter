@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd /winattacklab/
+
+echo "=========================="
+echo "SSH attack"
+echo "=========================="
+sleep 1
+
+echo "click on \"Run Task\" to run the ssh attack ..."
+

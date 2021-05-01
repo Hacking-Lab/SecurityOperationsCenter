@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+
+echo "`date`: $autodestroy from docker-compose.yml" > /tmp/autodestroy.log
+
+if [ -z ${autodestroy+x} ]; then
+	echo "`date`: autodestroy = 43200" >> /tmp/autodestroy.log
+else
+	echo "`date`: autodestroy = $autodestroy " >> /tmp/autodestroy.log
+	sed -i -e "s/DUR=43200/DUR=$autodestroy/g" /opt/scripts/deploy-task
+fi
+

@@ -1,0 +1,82 @@
+#!/bin/bash
+
+source /winattacklab/.deploy
+source /winattacklab/.destroy
+source /winattacklab/proxy.env
+
+cd /winattacklab/
+
+case "$DEPLOYED" in
+        init)
+            echo "`date`: terraform deploy not yet startet" >> /winattacklab/logs/check-deployment.log
+            ;;
+
+        deploying)
+            ps -ef|grep "/usr/bin/terraform apply"|grep -v grep > /dev/null
+            RESULT=$?
+            if [ $RESULT -eq 0 ]; then
+                echo "`date`: terraform apply is running" >> /winattacklab/logs/check-deployment.log
+            else
+                echo "`date`: terraform apply not running - deployment should have been finished - let's check ..." >> /winattacklab/logs/check-deployment.log
+
+                cd /winattacklab/
+                terraform state show 'azurerm_resource_group.winattacklabgroup' >> /winattacklab/logs/check-deployment.log
+                R1=$?
+                if [ $R1 -eq 0 ]; then
+                        echo "`date`: deploy was successful: infrastructure running" >> /winattacklab/logs/check-deployment.log
+			echo "DEPLOYED=\"finished\"" > /winattacklab/.deploy
+                else
+                        echo "`date`: deploy error: infrastructure not running" >> /winattacklab/logs/check-deployment.log
+                fi
+
+            fi
+
+            ;;
+
+        finished)
+            case "$DESTROYED" in
+                init)
+                    echo "`date`: terraform is fully deployed" >> /winattacklab/logs/check-deployment.log
+                    echo "`date`: user did not click on destroy" >> /winattacklab/logs/check-deployment.log
+                    ;;
+                running)
+                    ps -ef|grep "/usr/bin/terraform destroy"|grep -v grep > /dev/null
+                    RESULT=$?
+                    if [ $RESULT -eq 0 ]; then
+                        echo "`date`: user clicked on the destroy button" >> /winattacklab/logs/check-deployment.log
+                        echo "`date`: terraform destroy has started" >> /winattacklab/logs/check-deployment.log
+                    else
+                        echo "`date`: user clicked on the destroy button" >> /winattacklab/logs/check-deployment.log
+                        echo "`date`: terraform destroy has finished" >> /winattacklab/logs/check-deployment.log
+			cd /winattacklab/
+			terraform state show 'azurerm_resource_group.winattacklabgroup' >> /winattacklab/logs/check-deployment.log
+			R1=$?
+			if [ $R1 -eq 0 ]; then
+				echo "`date`: destroy not finished yet: infrastructure still running" >> /winattacklab/logs/check-deployment.log
+			else
+				echo "`date`: infrastructure is fully down" >>  /winattacklab/logs/check-deployment.log
+                                echo "DESTROYED=\"finished\"" > /winattacklab/.destroy
+                                echo "DEPLOYED=\"init\"" > /winattacklab/.deploy
+			fi 
+
+                    fi
+                    ;;
+
+                finished)
+	 	    echo "`date`: destroy successfully finished - will reset deployment to init" >> /winattacklab/logs/check-deployment.log
+                    echo "DEPLOYED=\"init\"" > /winattacklab/.deploy
+                    echo "DESTROYED=\"init\"" > /winattacklab/.destroy
+                    ;;
+                *)
+                    exit 1
+                    ;;
+	        esac
+            ;;
+
+        *)
+            exit 1
+            ;;
+
+esac
+
+
