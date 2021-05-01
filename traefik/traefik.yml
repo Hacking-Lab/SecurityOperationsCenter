@@ -45,17 +45,4 @@ tls:
         certFile: /certs/cert.crt
         keyFile: /certs/cert.key
 
-http:
-  services:
-    kibana:
-      loadBalancer:
-        servers:
-        - url: "https://10.0.1.16"
 # source: https://community.traefik.io/t/error-with-custom-tls-certs/2356/3
-# when testing certs, enable this so traefik doesn't use 
-# it's own self signed. By default if it can't find a matching
-# cert, it'll just create it's own which will cause cert warnings
-# in browser
-  # options:
-    # default:
-      # sniStrict: true
