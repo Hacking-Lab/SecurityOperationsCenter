@@ -9,8 +9,8 @@ services:
     command:
       - --log.level=DEBUG
       - --api.dashboard=true
-      - --entrypoints.http.address=:80
-      - --entrypoints.https.address=:443
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
       - --providers.docker=true
       - --providers.file.directory=/configuration/
       - --providers.file.watch=true
@@ -19,22 +19,25 @@ services:
       - 443:443
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "/opt/applic/soc_config/traefik/:/configuration/"
+      - "/opt/applic/soc_config/traefik/traefik.yml:/etc/traefik/traefik.yml"
+      - "/opt/applic/soc_config/traefik/certs/:/certs/"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik-secure.entrypoints=https"
+      - "traefik.http.routers.traefik-secure.entrypoints=websecure"
       - "traefik.http.routers.traefik-secure.rule=Host(`traefik.winattacklab.local`)"
       - "traefik.http.routers.traefik-secure.tls=true"
       - "traefik.http.routers.traefik-secure.service=api@internal"
 
-  my-app:
+  whoami:
     image: containous/whoami:v1.3.0
     container_name: whoami
     networks:
       - traefik_proxy
     labels:
-      - "traefik.http.routers.my-app.rule=Host(`whoami.winattacklab.local`)"
-#      - "traefik.http.routers.my-app.tls=true"
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.winattacklab.local`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls=true"
 
 networks:
   traefik_proxy:
