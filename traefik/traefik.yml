@@ -1,0 +1,52 @@
+## STATIC CONFIG (restart traefik to update)
+
+# log default is ERROR, but WARN is more helpful
+log:
+  level: WARN
+  # level: INFO
+
+# enable dashboard on 8080 with auth
+api:
+  insecure: true
+  dashboard: true
+
+# enable ping so the `traefik healthcheck` works
+ping: {}
+
+# auto-proxy containers if they have proper labels
+# and also use this file for dynamic config (tls)
+providers:
+  docker:
+    exposedByDefault: false
+    watch: true
+  file:
+    fileName: /etc/traefik/traefik.yml
+    watch: true
+
+entryPoints:
+  web:
+    address: :80
+  websecure:
+    address: :443
+
+## DYNAMIC CONFIG
+
+tls:
+  certificates:
+    - certFile: /certs/cert.crt
+      keyFile: /certs/cert.key
+      stores:
+       - default
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /certs/cert.crt
+        keyFile: /certs/cert.key
+# source: https://community.traefik.io/t/error-with-custom-tls-certs/2356/3
+# when testing certs, enable this so traefik doesn't use 
+# it's own self signed. By default if it can't find a matching
+# cert, it'll just create it's own which will cause cert warnings
+# in browser
+  # options:
+    # default:
+      # sniStrict: true
