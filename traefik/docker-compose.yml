@@ -1,18 +1,22 @@
 version: "3.7"
 
-services:
-  traefik:
-    image: traefik:1.7
-    networks:
-      - public
+traefik:
+    image: "traefik:v2.0"
+    command:
+      - --entrypoints.web.address=:80
+      - --entrypoints.web-secure.address=:443
+      - --providers.docker=true
+      - --providers.file.directory=/configuration/
+      - --providers.file.watch=true
     ports:
-      - 4000:4000
-      - 8080:8080
+      - "80:80"
+      - "443:443" 
     volumes:
-      - ./traefik.toml:/traefik.toml
-      - ./certs/:/certs/
-      - /var/run/docker.sock:/var/run/docker.sock
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/opt/applic/soc_config/traefik/:/configuration/"
 
-networks:
-  public:
-    driver: bridge
+my-app:
+  image: containous/whoami:v1.3.0
+  labels:
+    - "traefik.http.routers.my-app.rule=Host(`winattacklab.local`)"
+    - "traefik.http.routers.my-app.tls=true"
