@@ -3,24 +3,39 @@ version: "3.7"
 services:
   traefik:
     image: "traefik:v2.0"
+    container_name: traefik
+    networks:
+      - traefik_proxy
     command:
-      - --entrypoints.web.address=:80
-      - --entrypoints.web-secure.address=:443
+      - --log.level=DEBUG
+      - --api.dashboard=true
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
       - --providers.docker=true
       - --providers.file.directory=/configuration/
       - --providers.file.watch=true
     ports:
-      - "80:80"
-      - "443:443" 
+      - 80:80
+      - 443:443
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "/opt/applic/soc_config/traefik/:/configuration/"
     labels:
-      - "traefik.http.routers.traefik.rule=Host(`traefik.winattacklab.local`)"
-      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-secure.entrypoints=https"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.winattacklab.local`)"
+      - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
 
   my-app:
     image: containous/whoami:v1.3.0
+    container_name: whoami
+    networks:
+      - traefik_proxy
     labels:
       - "traefik.http.routers.my-app.rule=Host(`whoami.winattacklab.local`)"
-      - "traefik.http.routers.my-app.tls=true"
+#      - "traefik.http.routers.my-app.tls=true"
+
+networks:
+  traefik_proxy:
+    external: true
