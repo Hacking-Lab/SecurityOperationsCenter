@@ -10,13 +10,13 @@ services:
       - --log.level=DEBUG
       - --api.dashboard=true
       - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.address=:444
       - --providers.docker=true
       - --providers.file.directory=/configuration/
       - --providers.file.watch=true
     ports:
       - 80:80
-      - 443:443
+      - 444:443
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "/opt/applic/soc_config/traefik/traefik.yml:/etc/traefik/traefik.yml"
