@@ -56,7 +56,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.port=5601"
-      - "traefik.frontend.rule=Host:kibana.winattacklab.local
+      - "traefik.frontend.rule=Host:kibana.winattacklab.local"
       - "traefik.protocol=https"
     environment:
       - ELASTICSEARCH_USERNAME=admin
