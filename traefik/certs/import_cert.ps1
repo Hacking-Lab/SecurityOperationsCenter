@@ -6,3 +6,4 @@ $rootStore.Close()
 
 
 Import-Certificate -FilePath "ca.crt" -CertStoreLocation Cert:\LocalMachine\Root
+echo "added wildcard certificate for winattacklab.local"
