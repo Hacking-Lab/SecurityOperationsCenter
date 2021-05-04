@@ -8,6 +8,8 @@ services:
       - traefik_proxy
     command:
       - --log.level=DEBUG
+      - --api.debug=true
+      - --providers.docker.network=traefik_proxy
       - --api.dashboard=true
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
@@ -23,10 +25,12 @@ services:
       - "/opt/applic/soc_config/traefik/certs/:/certs/"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik-secure.entrypoints=websecure"
-      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.winattacklab.local`)"
-      - "traefik.http.routers.traefik-secure.tls=true"
-      - "traefik.http.routers.traefik-secure.service=api@internal"
+      - "traefik.http.routers.traefik1_router_http.rule=Host(`traefik.winattacklab.local`)"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.traefik1_router_http.middlewares=https_redirect"
+      - "traefik.http.routers.traefik1_router_https.rule=Host(`traefik.winattacklab.local`)"
+      - "traefik.http.routers.traefik1_router_https.tls"
+      - "traefik.http.services.traefik1_service.loadbalancer.server.port=8080"
 
   whoami:
     image: containous/whoami:v1.3.0
