@@ -62,11 +62,11 @@ services:
       - traefik_proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.kibana.rule=Host(`wazuh.winattacklab.local`)"
-      - "traefik.http.routers.kibana.entrypoints=websecure"
-      - "traefik.http.routers.kibana.tls=true"
+      - "traefik.http.routers.kibana_router_http.rule=Host(`wazuh.winattacklab.local`)"
+      - "traefik.http.routers.kibana_router_http.middlewares=https_redirect"
+      - "traefik.http.routers.kibana_router_https.rule=Host(`wazuh.winattacklab.local`)"
+      - "traefik.http.routers.kibana_router_https.tls"
       - "traefik.http.services.kibana.loadbalancer.server.port=5601"
-
     environment:
       - ELASTICSEARCH_USERNAME=admin
       - ELASTICSEARCH_PASSWORD=admin
