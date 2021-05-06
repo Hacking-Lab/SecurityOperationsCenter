@@ -6,6 +6,8 @@ services:
     image: attack-launcher:latest
     hostname: 'attack-launcher'
     restart: always
+    networks:
+      - traefik_proxy
     environment:
       - HL_USER_USERNAME=hacker
       - HL_USER_PASSWORD=compass
@@ -19,3 +21,7 @@ services:
       - "traefik.http.routers.attack_router_https.tls=true"
       - "traefik.http.services.attack-launcher.loadbalancer.server.port=80"
       - "traefik.http.services.attack-launcher.loadbalancer.server.scheme=http"
+
+networks:
+  traefik_proxy:
+    external: true
