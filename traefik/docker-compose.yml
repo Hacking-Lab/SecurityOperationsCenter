@@ -1,32 +1,31 @@
 version: "3.7"
 
-services:
-  traefik:
-    image: "traefik:v2.0"
-    container_name: traefik
-    networks:
-      - traefik_proxy
-    command:
-      - --log.level=DEBUG
-      - --api.debug=true
-      - --api.dashboard=true
-      - --providers.docker=true
-      - --providers.docker.network=traefik_proxy
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --providers.docker=true
-      - --providers.file.directory=/configuration/
-      - --providers.file.watch=true
-      - --serversTransport.insecureSkipVerify=true
-    ports:
-      - "80:80"
-      - "8090:8080"
-      - "443:443"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "/opt/applic/soc_config/traefik/traefik.yml:/etc/traefik/traefik.yml"
-      - "/opt/applic/soc_config/traefik/certs/:/certs/"
+traefik:
+  image: "traefik:v2.0"
+  container_name: traefik
+  networks:
+    - traefik_proxy
+  command:
+    - --log.level=DEBUG
+    - --api.debug=true
+    - --api.dashboard=true
+    - --api.insecure=true
+    - --providers.docker=true
+    - --providers.docker.network=traefik_proxy
+    - --providers.docker.exposedbydefault=false
+    - --providers.file.directory=/configuration/
+    - --providers.file.watch=true
+    - --entrypoints.http.address=:80
+    - --entrypoints.https.address=:443
+    - --serversTransport.insecureSkipVerify=true
+  ports:
+    - "80:80"
+    - "8090:8080"
+    - "443:443"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    - "/opt/applic/soc_config/traefik/traefik.yml:/etc/traefik/traefik.yml"
+    - "/opt/applic/soc_config/traefik/certs/:/certs/"
 
 networks:
   traefik_proxy:
