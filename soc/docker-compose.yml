@@ -7,6 +7,8 @@ services:
     hostname: wazuh-manager
     networks:
       - traefik_proxy
+    labels:
+      - "traefik.enable=false"      
     restart: always
     ports:
       - "1514:1514"
@@ -36,6 +38,8 @@ services:
     hostname: elasticsearch
     networks:
       - traefik_proxy
+    labels:
+      - "traefik.enable=false"      
     restart: always
     ports:
       - "9200:9200"
@@ -63,10 +67,12 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.kibana_router_http.rule=Host(`wazuh.winattacklab.local`)"
-      - "traefik.http.routers.kibana_router_http.middlewares=https_redirect"
+      - "traefik.http.routers.kibana_router_http.entrypoints=http"       
+      - "traefik.http.routers.kibana_router_http.middlewares=redirect@file"
       - "traefik.http.routers.kibana_router_https.rule=Host(`wazuh.winattacklab.local`)"
-      - "traefik.http.routers.kibana_router_https.tls"
+      - "traefik.http.routers.kibana_router_https.tls=true"
       - "traefik.http.services.kibana.loadbalancer.server.port=5601"
+      - "traefik.http.services.kibana.loadbalancer.server.scheme=https"
     environment:
       - ELASTICSEARCH_USERNAME=admin
       - ELASTICSEARCH_PASSWORD=admin
