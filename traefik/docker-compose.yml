@@ -9,39 +9,24 @@ services:
     command:
       - --log.level=DEBUG
       - --api.debug=true
-      - --providers.docker.network=traefik_proxy
       - --api.dashboard=true
+      - --providers.docker=true
+      - --providers.docker.network=traefik_proxy
+      - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
       - --providers.docker=true
       - --providers.file.directory=/configuration/
       - --providers.file.watch=true
+      - --serversTransport.insecureSkipVerify=true
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "8090:8080"
+      - "443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "/opt/applic/soc_config/traefik/traefik.yml:/etc/traefik/traefik.yml"
       - "/opt/applic/soc_config/traefik/certs/:/certs/"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.traefik1_router_http.rule=Host(`traefik.winattacklab.local`)"
-      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.traefik1_router_http.middlewares=https_redirect"
-      - "traefik.http.routers.traefik1_router_https.rule=Host(`traefik.winattacklab.local`)"
-      - "traefik.http.routers.traefik1_router_https.tls"
-      - "traefik.http.services.traefik1_service.loadbalancer.server.port=8080"
-
-  whoami:
-    image: containous/whoami:v1.3.0
-    container_name: whoami
-    networks:
-      - traefik_proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`whoami.winattacklab.local`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls=true"
 
 networks:
   traefik_proxy:
