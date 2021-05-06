@@ -1,35 +1,9 @@
-## STATIC CONFIG (restart traefik to update)
-
-# log default is ERROR, but WARN is more helpful
-log:
-  level: WARN
-  # level: INFO
-
-# enable dashboard on 8080 with auth
-api:
-  insecure: true
-  dashboard: true
-
-# enable ping so the `traefik healthcheck` works
-ping: {}
-
-# auto-proxy containers if they have proper labels
-# and also use this file for dynamic config (tls)
-providers:
-  docker:
-    exposedByDefault: false
-    watch: true
-  file:
-    fileName: /etc/traefik/traefik.yml
-    watch: true
-
-entryPoints:
-  web:
-    address: :80
-  websecure:
-    address: :443
-
-
+## Setting up the middleware for redirect to https ##
+http:
+  middlewares:
+    redirect:
+      redirectScheme:
+        scheme: https
 
 ## DYNAMIC CONFIG
 
