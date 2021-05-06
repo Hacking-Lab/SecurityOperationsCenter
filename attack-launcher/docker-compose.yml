@@ -11,6 +11,6 @@ services:
       - HL_USER_PASSWORD=compass
     labels:
       - "traefik.enable=true"
-      - "traefik.port=80"
-      - "traefik.frontend.rule=Host:attack-launcher.winattacklab.local"
-      - "traefik.protocol=http"
+      - "traefik.http.routers.attack_router_http.rule=Host(`attack-launcher.winattacklab.local`)"
+      - "traefik.http.routers.attack_router_http.entrypoints=http"       
+      - "traefik.http.services.attack.loadbalancer.server.scheme=http"
