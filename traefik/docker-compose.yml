@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.7"
 
 services:
   traefik:
@@ -14,8 +14,7 @@ services:
       - --providers.docker=true
       - --providers.docker.network=traefik_proxy
       - --providers.docker.exposedbydefault=false
-      - --providers.file.directory=/configuration/
-      - --providers.file.watch=true
+      - --providers.file.filename=/configuration/traefik.yml
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
       - --serversTransport.insecureSkipVerify=true
@@ -24,8 +23,8 @@ services:
       - "8090:8080"
       - "443:443"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "/opt/applic/soc_config/traefik/traefik.yml:/etc/traefik/traefik.yml"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/opt/applic/soc_config/traefik/traefik.yml:/configuration/traefik.yml"
       - "/opt/applic/soc_config/traefik/certs/:/certs/"
 
 networks:
