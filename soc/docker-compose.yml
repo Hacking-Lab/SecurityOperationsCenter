@@ -69,6 +69,7 @@ services:
       - "traefik.http.routers.kibana_router_http.rule=Host(`wazuh.winattacklab.local`)"
       - "traefik.http.routers.kibana_router_http.entrypoints=http"       
       - "traefik.http.routers.kibana_router_http.middlewares=redirect@file"
+      - "traefik.http.routers.kibana_router_https.entrypoints=https"
       - "traefik.http.routers.kibana_router_https.rule=Host(`wazuh.winattacklab.local`)"
       - "traefik.http.routers.kibana_router_https.tls=true"
       - "traefik.http.services.kibana.loadbalancer.server.port=5601"
