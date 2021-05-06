@@ -14,6 +14,7 @@ services:
       - "traefik.http.routers.attack_router_http.rule=Host(`attack-launcher.winattacklab.local`)"
       - "traefik.http.routers.attack_router_http.entrypoints=http"
       - "traefik.http.routers.attack_router_http.middlewares=redirect@file"
+      - "traefik.http.routers.attack_router_https.entrypoints=https"
       - "traefik.http.routers.attack_router_https.rule=Host(`attack-launcher.winattacklab.local`)"
       - "traefik.http.routers.attack_router_https.tls=true"
       - "traefik.http.services.attack-launcher.loadbalancer.server.port=80"
