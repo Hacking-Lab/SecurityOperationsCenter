@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  mailcatcher:
+    image: schickling/mailcatcher
+    restart: always
+    networks:
+      - traefik_proxy
+    ports:
+      - 25:1025
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mail_router_http.rule=Host(`mailcatcher.winattacklab.local`)"
+      - "traefik.http.routers.mail_router_http.entrypoints=http"
+      - "traefik.http.routers.mail_router_http.middlewares=redirect@file"
+      - "traefik.http.routers.mail_router_https.entrypoints=https"
+      - "traefik.http.routers.mailrouter_https.rule=Host(`mailcatcher.winattacklab.local`)"
+      - "traefik.http.routers.mail_router_https.tls=true"
+      - "traefik.http.services.mailcatcher.loadbalancer.server.port=1080"
+      - "traefik.http.services.mailcatcher.loadbalancer.server.scheme=http"
+
+networks:
+  traefik_proxy:
+    external: true
