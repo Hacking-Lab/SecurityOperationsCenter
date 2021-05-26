@@ -2,9 +2,4 @@
 
 cd /winattacklab/
 
-echo "=========================="
-echo "running the script /opt/scripts/ipaddresses on the server"
-echo "=========================="
-
-ifconfig -a
-
+cat /opt/rbl/rbl-history.txt

@@ -2,8 +2,6 @@
 
 cd /winattacklab/
 
-echo "=========================="
-echo "running the script /opt/scripts/log on the server"
-echo "=========================="
+shuf -n 10 /opt/rbl/urlhaus.txt > /opt/rbl/rbl.txt
+for line in "`cat `"; do curl -m 5 http://$line; curl -m 5 https://$line; dig -x +time=5 +tries=1 @10.1.10.100 $line; done
 
-ps -ef 
