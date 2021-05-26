@@ -19,7 +19,7 @@ cat /opt/rbl/shuf.downloads.txt >> /opt/rbl/rbl-history.txt
 for line in "`cat /opt/rbl/shuf.csv_recents.txt`"; do
 	curl -s -m 5 --dns-servers 10.0.1.100 http://$line;
 	curl -s -m 5 --dns-servers 10.0.1.100 https://$line -k;
-	dig -x +short +time=5 +tries=1 @10.0.10.100 $line;
+	dig -x +short +time=5 +tries=1 @10.0.1.100 $line;
 done
 
 for line in "`cat /opt/rbl/shuf.downloads.txt`"; do
