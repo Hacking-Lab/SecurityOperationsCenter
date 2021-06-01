@@ -1,7 +1,8 @@
 #!/bin/bash
 
-cd /winattacklab/
+echo "Picking 10 malicious ip addresses at random from urlhaus..."
 
 shuf -n 10 /opt/rbl/urlhaus.txt > /opt/rbl/rbl.txt
-for line in "`cat `"; do curl -m 5 http://$line; curl -m 5 https://$line; dig -x +time=5 +tries=1 @10.1.10.100 $line; done
+
+cat /opt/rbl/rbl.txt
 
