@@ -6,3 +6,4 @@ shuf -n 10 /opt/rbl/urlhaus.txt > /opt/rbl/rbl.txt
 
 cat /opt/rbl/rbl.txt
 
+echo "Reload this page if you want 10 new ip addresses"
