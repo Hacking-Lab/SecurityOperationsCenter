@@ -2,7 +2,7 @@
 
 cd /winattacklab/
 
-shuf -n 10 /opt/rbl/csv_recents.txt > /opt/rbl/shuf.csv_recents.txt
+shuf -n 10 /opt/rbl/urlhaus.txt > /opt/rbl/shuf.csv_recents.txt
 shuf -n 10 /opt/rbl/downloads.txt > /opt/rbl/shuf.downloads.txt
 
 echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
