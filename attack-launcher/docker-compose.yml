@@ -5,7 +5,7 @@ services:
     build: .
     image: attack-launcher:latest
     hostname: 'attack-launcher'
-    restart: always
+    restart: on-failure # sometimes fails on ncrack build
     networks:
       - traefik_proxy
     environment:
