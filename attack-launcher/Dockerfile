@@ -14,7 +14,7 @@ RUN apk add --update --no-cache openssl wget openssh sshpass nmap socat git alpi
     ./configure && \
     make && \
     make install && \
-    rm -rf /opt/nacrack && \
+    rm -rf /opt/ncrack && \
     apk del git alpine-sdk && \
     rm -rf /var/cache/apk/* 
 
