@@ -16,14 +16,14 @@ echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
 cat /opt/rbl/shuf.downloads.txt >> /opt/rbl/rbl-history.txt
 
 
-for line in "`cat /opt/rbl/shuf.csv_recents.txt`"; do
-	curl -s -m 5 --dns-servers 10.0.1.100 http://$line;
-	curl -s -m 5 --dns-servers 10.0.1.100 https://$line -k;
-	dig -x +short +time=5 +tries=1 @10.0.1.100 $line;
+lines=$(cat /opt/rbl/shuf.csv_recents.txt)
+for line in $lines; do
+        curl -s -m 5 --dns-servers 10.0.1.100 http://$line;
+        curl -s -m 5 --dns-servers 10.0.1.100 https://$line -k;
+        dig -x +short +time=5 +tries=1 @10.0.1.100 $line;
 done
 
-for line in "`cat /opt/rbl/shuf.downloads.txt`"; do
+lines=$(cat /opt/rbl/shuf.downloads.txt)
+for line in $lines; do
         curl -s -m 5 --dns-servers 10.0.1.100 $line -k;
 done
-
-
