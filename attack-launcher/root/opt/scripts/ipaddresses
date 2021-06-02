@@ -14,7 +14,7 @@ cat /opt/rbl/shuf.downloads.txt
 
 echo "Click on Run Task to make requests to the listed addresses above"
 sleep 2s
-echo "The history of all picked ip addresses from URLhaus..."
+echo "The history of all picked addresses from URLhaus..."
 sleep 2s
 cat /opt/rbl/rbl-history.txt
 
