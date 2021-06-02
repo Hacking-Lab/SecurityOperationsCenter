@@ -6,15 +6,16 @@ cd /winattacklab/
 
 
 echo "Here are the latest ip addresses if you have accessed Malware Attack at least once..." 
-echo "The history of picked ip addresses from URLhaus..."
-sleep 2s
-cat /opt/rbl/rbl-history.txt
-
-
 echo "Latest 10 addresses from https://urlhaus.abuse.ch/downloads/csv_recent/"
 cat /opt/rbl/shuf.csv_recents.txt
 
 echo "Latest 10 addresses from https://urlhaus.abuse.ch/downloads/text/"
 cat /opt/rbl/shuf.downloads.txt
+
+echo "The history of all picked ip addresses from URLhaus..."
+sleep 2s
+cat /opt/rbl/rbl-history.txt
+
+
 
 echo "Click on Run Task to make requests to the latest 10 ip addresses from the latest Malware Attack execution"
