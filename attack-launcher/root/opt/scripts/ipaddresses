@@ -1,29 +1,20 @@
 #!/bin/bash
 
+# Request latest malicious ip addresses
+
 cd /winattacklab/
 
-shuf -n 10 /opt/rbl/urlhaus.txt > /opt/rbl/shuf.csv_recents.txt
-shuf -n 10 /opt/rbl/downloads.txt > /opt/rbl/shuf.downloads.txt
 
-echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
-echo "`date`: csv recents" >> /opt/rbl/rbl-history.txt
-echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
-cat /opt/rbl/shuf.csv_recents.txt >> /opt/rbl/rbl-history.txt
-
-echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
-echo "`date`: downloads" >> /opt/rbl/rbl-history.txt
-echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
-cat /opt/rbl/shuf.downloads.txt >> /opt/rbl/rbl-history.txt
+echo "Here are the latest ip addresses if you have accessed Malware Attack at least once..." 
+echo "The history of picked ip addresses from URLhaus..."
+sleep 2s
+cat /opt/rbl/rbl-history.txt
 
 
-lines=$(cat /opt/rbl/shuf.csv_recents.txt)
-for line in $lines; do
-        curl -s -m 5 --dns-servers 10.0.1.100 http://$line;
-        curl -s -m 5 --dns-servers 10.0.1.100 https://$line -k;
-        dig -x +short +time=5 +tries=1 @10.0.1.100 $line;
-done
+echo "Latest 10 addresses from https://urlhaus.abuse.ch/downloads/csv_recent/"
+cat /opt/rbl/shuf.csv_recents.txt
 
-lines=$(cat /opt/rbl/shuf.downloads.txt)
-for line in $lines; do
-        curl -s -m 5 --dns-servers 10.0.1.100 $line -k;
-done
+echo "Latest 10 addresses from https://urlhaus.abuse.ch/downloads/text/"
+cat /opt/rbl/shuf.downloads.txt
+
+echo "Click on Run Task to make requests to the latest 10 ip addresses from the latest Malware Attack execution"

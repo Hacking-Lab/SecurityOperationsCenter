@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# RDP Bruteforce Attack
+
 cd /winattacklab/
 
 echo "=========================="
@@ -8,4 +10,3 @@ echo "=========================="
 sleep 1
 
 echo "click on \"Run Task\" to run the RDP attack ..."
-

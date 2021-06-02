@@ -1,7 +1,14 @@
 #!/bin/bash
 
-echo "Executing requests on following 10 malicious ip addresses"
-lines=$(cat /opt/rbl/rbl.txt)
+# Request new malicious ip addresses
+
+cd /winattacklab/
+
+echo "Executing requests on following 10 malicious ip addresses..."
+
+lines=$(cat /opt/rbl/shuf.csv_recents.txt)
 echo "$lines"
 
-for line in $lines; do echo "Requesting $line..."; curl -m 5 http://$line; curl -m 5 https://$line; dig -x +time=5 +tries=1 @10.1.10.100 $line; done
+for line in $lines; do 
+    echo "Requesting $line..."; curl -m 5 http://$line; curl -m 5 https://$line; dig -x +time=5 +tries=1 @10.1.10.100 $line; 
+done
