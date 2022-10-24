@@ -4,15 +4,16 @@
 
 cd /winattacklab/
 
-
-echo "Here are the latest ip addresses if you have accessed Malware Attack at least once..." 
+echo "======================================="
 echo "Latest 10 addresses from https://urlhaus.abuse.ch/downloads/csv_recent/"
 cat /opt/rbl/shuf.csv_recents.txt
 
+echo "======================================="
 echo "Latest 10 addresses from https://urlhaus.abuse.ch/downloads/text/"
 cat /opt/rbl/shuf.downloads.txt
 
-echo "Click on Run Task to make requests to the listed addresses above"
+echo "======================================="
+echo "Click on Run Task to make web requests to the listed addresses above"
 sleep 2s
 echo "The history of all picked addresses from URLhaus..."
 sleep 2s

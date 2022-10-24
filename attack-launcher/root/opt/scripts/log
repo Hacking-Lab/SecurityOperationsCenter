@@ -5,11 +5,13 @@
 cd /winattacklab/
 
 shuf -n 10 /opt/rbl/urlhaus.txt > /opt/rbl/shuf.csv_recents.txt
+echo "====================================================="
 echo "Picking 10 malicious ip addresses at random from https://urlhaus.abuse.ch/downloads/csv_recent/"
 cat /opt/rbl/shuf.csv_recents.txt
 
 shuf -n 10 /opt/rbl/downloads.txt > /opt/rbl/shuf.downloads.txt
-echo "Picking 10 malicious addresses at random from https://urlhaus.abuse.ch/downloads/text/"
+echo "====================================================="
+echo "Picking 10 malicious URLs at random from https://urlhaus.abuse.ch/downloads/text/"
 cat /opt/rbl/shuf.downloads.txt
 
 echo "Reload this page if you want new ip addresses"
@@ -23,3 +25,5 @@ echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
 echo "`date`: downloads" >> /opt/rbl/rbl-history.txt
 echo "`date`: ===============================" >> /opt/rbl/rbl-history.txt
 cat /opt/rbl/shuf.downloads.txt >> /opt/rbl/rbl-history.txt
+
+

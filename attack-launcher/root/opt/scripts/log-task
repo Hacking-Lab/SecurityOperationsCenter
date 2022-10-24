@@ -4,11 +4,18 @@
 
 cd /winattacklab/
 
-echo "Executing requests on following 10 malicious ip addresses..."
+echo "Executing web requests on following 10 malicious ip addresses..."
 
 lines=$(cat /opt/rbl/shuf.csv_recents.txt)
 echo "$lines"
 
 for line in $lines; do 
-    echo "Requesting $line..."; curl -m 5 http://$line; curl -m 5 https://$line; dig -x +time=5 +tries=1 @10.1.10.100 $line; 
+    echo "Requesting http://$line"
+    curl -k -m 5 http://$line
+    echo "Requesting https://$line"
+    curl -k -m 5 https://$line
+    echo "Reverse Lookup of $line"
+    dig -x +short +time=5 +tries=1 @10.0.1.100 $line; 
 done
+
+

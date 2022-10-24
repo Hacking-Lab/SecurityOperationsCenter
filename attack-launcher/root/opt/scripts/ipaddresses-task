@@ -4,22 +4,28 @@
 
 cd /winattacklab/
 
-echo "Executing requests on following malicious ip addresses..."
+echo "======================================="
+echo "Executing web requests on following malicious ip addresses"
 lines=$(cat /opt/rbl/shuf.csv_recents.txt)
 echo "$lines"
 
 for line in $lines; do
-    echo "Requesting $line"
-    curl -s -m 5 --dns-servers 10.0.1.100 http://$line;
-    curl -s -m 5 --dns-servers 10.0.1.100 https://$line -k;
+    echo "Requesting http://$line"
+    curl -s -k -m 5 --dns-servers 10.0.1.100 http://$line;
+    echo "Requesting https://$line"
+    curl -s -k -m 5 --dns-servers 10.0.1.100 https://$line;
+    echo "DNS Reverse Lookup $line"
     dig -x +short +time=5 +tries=1 @10.0.1.100 $line;
 done
 
-echo "Executing requests on following 10 malicious ip addresses..."
+echo "======================================="
+echo "Executing requests to the following 10 malicious web addresses"
 lines=$(cat /opt/rbl/shuf.downloads.txt)
 echo "$lines"
 
 for line in $lines; do
     echo "Requesting $line"
-    curl -s -m 5 --dns-servers 10.0.1.100 $line -k;
+    curl -s -k -m 5 --dns-servers 10.0.1.100 $line;
 done
+
+
